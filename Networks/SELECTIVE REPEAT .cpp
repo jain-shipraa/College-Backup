@@ -1,0 +1,112 @@
+#include<iostream>
+#include<string>
+using namespace std;
+#include<math.h>
+int n,ack;
+
+class sender
+{
+	public:	   
+	int fsz;
+	void input();
+	void to_dll(int[],int,int);
+};
+
+class receiver
+{
+	int arr2[50];
+	public:
+	void dll(int[],int,int);
+	void resent(int,int);    
+};
+
+void sender::input()
+{   
+	int f,m,fs[50];
+	cout<<"\n Enter the number of bits allowed for sequence number :";
+	cin>>m;
+	
+	fsz=pow(2,m)-1;
+	cout<<"\n The size of the sliding window :"<<fsz;
+	
+	cout<<"\n Enter the total number of frames to be sent :";
+	cin>>f;
+	
+	cout<<"\n Enter frames :";
+	for(int i=0;i<fsz;i++)
+	    fs[i]=i;
+	to_dll(fs,f,0);
+     	 
+}
+
+void sender::to_dll(int fs[],int f,int n=0)
+{
+	 receiver r;
+ 	 int arr[10],i,j; 
+	 do
+ 	 {
+		 cout<<"\nFrames at senders dll";
+ 		    for(i=n,j=0;i<n+f;i++,j++)
+	     		arr[j]=fs[i];
+	    
+	         r.dll(arr,n,f);
+	
+		 if(ack==1)
+	 		{
+			cout<<"\nSuccessful Transmission";
+                        ack=0;
+			}
+		 else
+			r.resent(arr[n],f);
+	
+		 cout<<"\nEnter the no. of frames you want to send more:";
+		 cin>>f;
+	 }
+	 while(f<fsz);
+}	  
+
+void receiver::dll(int arr[],int n,int f)
+{
+	 int i,ch;
+	 i=n;
+  	 
+	 cout<<"\n1.Ack lost";
+  	 cout<<"\n2.Ack sent";
+  	 cout<<"\nEnter your choice:";
+  	 cin>>ch;
+  
+	 switch(ch)
+         {
+ 		 case 1:ack=0;
+	                cout<<"\nWhich ack is lost?";
+	                cin>>n;
+			for(int j=0;i<f;i++,j++)
+			{
+				if(i!=n)
+ 				  arr2[i]=arr[j];		
+			}
+			break;
+		 case 2:n=f+1;	    
+			ack=1;
+			break;
+		}
+}	 	 	 	    	 
+
+void receiver::resent(int x,int f)
+{
+	cout<<"\n Resending frame.....";
+	arr2[n]=x;
+	n=f+1;
+}
+	
+
+int main()
+{
+	sender S;
+	S.input();	  	  
+	return 0;	 
+}
+
+
+	
+
