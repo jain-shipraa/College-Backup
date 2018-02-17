@@ -1,0 +1,157 @@
+#include<iostream.h>
+#include<conio.h>
+#include<stdio.h>
+
+
+char ct[20],pt[20],rf[20],k[26];
+int i,j,l;
+
+void encrypt();
+void decrypt();
+void select(int);
+void getd();
+void display2();
+int display();
+
+void main()
+
+{
+
+int c;
+
+do{
+clrscr();
+display();
+cout<<“Enter Your Choice:”;
+cin>>c;
+
+if(c>4 || c<1){
+clrscr();
+cout<<“\nEnter proper value\n”;
+display();
+cin>>c;
+}
+
+select(c);
+
+}while(c!=4);
+
+getch();
+
+}
+
+int display()
+{
+
+cout<<“\n MENU : POLYALPHABETIC :";
+cout<<”\n [1] Enter The Text”;
+cout<<”\n [2] Encrypted Text”;
+cout<<”\n [3] Decrypted Text”;
+cout<<”\n [4] Exit”;
+
+return 0;
+}
+
+void select(int c)
+{
+
+int i;
+
+switch(c)
+{
+case 1:
+
+clrscr();
+display();
+getd();
+display2();
+for(i=0;ct[i]!='\0';i++)
+ct[i]='0';
+break;
+
+
+case 2:
+
+clrscr();
+display();
+encrypt();
+break;
+
+
+case 3:
+clrscr();
+display();
+decrypt();
+break;
+
+
+case 4: break;
+
+}
+
+}
+
+void getd()
+{
+cout<<“Enter the key:”;
+gets(k);
+
+cout<<“Enter the Plaintext:”;
+gets(pt);
+
+}
+
+void display2()
+{
+clrscr();
+cout<<“key:"<<k<<"plaintext:"<<pt<<endl;
+getch();
+}
+
+void encrypt()
+{
+//ct=(26+((65-k)+(65-pt)))%26;
+int l1=strlen(pt);
+display2();
+
+for(i=0,l=0;i<l1;i++)
+{
+if(pt[i]==’ ‘)
+   ct[i]=pt[i];//copy the blanks as it is !
+else
+{
+j=l%3;
+ct[i]=65+((26+((k[j]-65)+(pt[i]-65)))%26);
+l++;
+
+\}
+
+}
+
+cout<<“ciphertext:”<<ct<<endl;
+getch();
+
+}
+
+void decrypt(){
+
+//rf=(26+((65-ct)+(65-k)))%26;
+
+int l1=strlen(pt);
+cout<<“key:"<<k<<" ciphertext:"<<ct<<endl;
+
+for(i=0,l=0;i<l1;i++){
+if(ct[i]==’ ‘)
+rf[i]=ct[i];
+else
+{
+j=l%3;
+rf[i]=65+((26+((ct[i]-65)-(k[j]-65)))%26);
+l++;
+}
+
+}
+cout<<“\n plaintext:”<<rf<<endl;
+getch();
+
+}

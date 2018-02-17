@@ -1,0 +1,119 @@
+#include <iostream>
+
+#include<exception>
+
+using namespace std;
+
+
+class fact:public exception 
+
+{
+    
+ private:
+ 
+    int n;
+   
+  
+    
+ public:
+     
+
+     virtual const char* what() const throw()
+ 
+    {
+         
+
+    return "**Error type :Negative Factorial";
+   
+  
+    }
+     
+    
+
+    void calc(int num)
+    
+    {
+         
+      n=1;
+       
+      if(num>0)
+      
+      {
+         
+       n*=num;
+       
+       num--;
+         
+      }
+         
+      else if(num==0)
+    
+       n=1;
+   
+    }
+     
+    
+    
+    void disp()
+    
+    {
+       
+     cout<<"Factorial:"<<n;
+    
+    }
+
+};
+
+
+
+
+int main()
+
+{
+ 
+  
+
+ int n;
+  
+ fact f;
+  
+ 
+ cout<<"\n Enter A number whose factorial is to be calculated:";
+
+  try
+  
+   {
+     
+     cin>>n;
+   
+     if(n<0)
+    
+     throw fact();
+    
+    
+      
+     f.calc(n);
+     
+     f.disp();
+ 
+   }
+  
+  catch(exception& err)
+
+  {
+     
+    cout<<err.what();
+ 
+  }
+  
+ 
+ 
+ cout<<"\n End of demo";
+  
+ return 0;
+
+
+}
+
+
+
